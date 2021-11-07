@@ -39,7 +39,7 @@ jobs:
         run: |
           cd demo-service
           chmod +x gradlew
-          ./gradlew bootBuildImage --publishImage --imageName thomasvitale/demo-service-devoxx:1.0 -PregistryUrl=${{ secrets.REGISTRY_URL }} -PregistryUsername=${{ secrets.REGISTRY_USERNAME }} -PregistryToken=${{ secrets.REGISTRY_TOKEN }}
+          ./gradlew bootBuildImage --publishImage --imageName thomasvitale/demo-service-goto:1.0 -PregistryUrl=${{ secrets.REGISTRY_URL }} -PregistryUsername=${{ secrets.REGISTRY_USERNAME }} -PregistryToken=${{ secrets.REGISTRY_TOKEN }}
   
   build-native:
     name: Build Demo Native
@@ -75,4 +75,4 @@ jobs:
         run: |
           cd demo-native
           chmod +x gradlew
-          ./gradlew bootBuildImage --publishImage --imageName thomasvitale/demo-native-devoxx:1.0 -PregistryUrl=${{ secrets.REGISTRY_URL }} -PregistryUsername=${{ secrets.REGISTRY_USERNAME }} -PregistryToken=${{ secrets.REGISTRY_TOKEN }}
+          ./gradlew bootBuildImage --publishImage --imageName thomasvitale/demo-native-goto:1.0 -PregistryUrl=${{ secrets.REGISTRY_URL }} -PregistryUsername=${{ secrets.REGISTRY_USERNAME }} -PregistryToken=${{ secrets.REGISTRY_TOKEN }}
