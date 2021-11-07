@@ -1,0 +1,6 @@
+demo:
+  message: Spring Boot on the cloud!
+
+spring:
+  application:
+    name: demo-service

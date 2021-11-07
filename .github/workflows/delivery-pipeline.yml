@@ -1,0 +1,78 @@
+name: CD Pipeline
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-service:
+    name: Build Demo Service
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+      - name: Compile and test application
+        run: |
+          cd demo-service
+          chmod +x gradlew
+          ./gradlew build
+  package-service:
+    name: Package Demo Service
+    needs: [build-service]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+      - name: Containerize and publish image
+        run: |
+          cd demo-service
+          chmod +x gradlew
+          ./gradlew bootBuildImage --publishImage --imageName thomasvitale/demo-service-devoxx:1.0 -PregistryUrl=${{ secrets.REGISTRY_URL }} -PregistryUsername=${{ secrets.REGISTRY_USERNAME }} -PregistryToken=${{ secrets.REGISTRY_TOKEN }}
+  
+  build-native:
+    name: Build Demo Native
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+      - name: Compile and test application
+        run: |
+          cd demo-native
+          chmod +x gradlew
+          ./gradlew build
+  package-native:
+    name: Package Demo Native
+    needs: [build-native]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+      - name: Containerize and publish image
+        run: |
+          cd demo-native
+          chmod +x gradlew
+          ./gradlew bootBuildImage --publishImage --imageName thomasvitale/demo-native-devoxx:1.0 -PregistryUrl=${{ secrets.REGISTRY_URL }} -PregistryUsername=${{ secrets.REGISTRY_USERNAME }} -PregistryToken=${{ secrets.REGISTRY_TOKEN }}
