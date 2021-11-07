@@ -11,6 +11,8 @@ Demonstration of:
 - Native executables with Spring Native and GraalVM
 - Serverless applications on Knative
 
+[Conference Session](https://gotocph.com/2021/sessions/1934/cloud-native-with-spring-boot-and-kubernetes)
+
 ## Prerequisites
 
 To run all the examples, you need to install the following tools:
